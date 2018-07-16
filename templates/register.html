@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Registration</title>
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/validateForm.js') }}">
+</script>
+</head>
+<body>
+<form action="/register" method="POST" onsubmit="return validate()">
+    <p>UserID: <input type="userid" name="userid"></p>
+
+    <P>Username: <input type="username" name="username" id="username" required></p>
+
+    <p>Age: <input type="age" name="age" id="age"></p>
+    
+
+    <p><input type="submit" value="Register"></p>
+
+    <a href="/loginForm">Login here</a>
+</form>
+</body>
+</html>
+
+
+

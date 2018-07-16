@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href={{ url_for('static', filename='css/home.css') }} />
+<link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css') }} />
+</head>
+<body>
+<div id="title">
+	<div>
+		<h1 align="center"><font size="15"><font color="#FFFFFF">智能图书推荐系统</font></font></h1>
+	</div>
+	{% if not loggedIn %}
+	<div id="signInButton">
+		<a class="link" href="/loginForm" ><font size="5">登录</font></a>
+	</div>
+	{% else %}
+	<div class="dropdown">
+		<button class="dropbtn">欢迎您, <br>用户ID:{{firstName}}</button>
+		<div class="dropdown-content">
+			<a href="/account/orders">查看书单</a>
+			<a href="/account/profile">个人信息修改</a>
+			<hr>
+			<a href="/logout">登出</a>
+		</div>
+	</div>
+	{% endif %}
+	<div id="kart">
+		<a class="link" href="/cart">
+			您阅读了 {{noOfItems}} 本书
+		</a>
+	</div>
+</div>
+<div class="display">
+	<div class="displayCategory">
+		<h2>书籍分类: </h2>
+		<ul>
+			{% for row in categoryData %}
+			<li><a href="/displayCategory?categoryId={{row[0]}}">{{row[1]}}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% if not loggedIn %}
+	<div>
+		<h2>猜你喜欢：请登陆，将推荐合适您的书籍！</h2>
+	</div>
+	{% else %}
+	<div>
+		<h2>{{firstName}}， 猜你喜欢：</h2>
+		{% for data in likeData %}
+		<table>
+			<tr id="productName">
+				{% for row in data %}
+				<td>
+					书籍编号:{{row[1]}} 
+					<p>推荐指数:{{row[4]}}  </p>
+				</td>
+				{% endfor %}
+			</tr>
+			<tr id="productImage">
+				{% for row in data %}
+				<td>
+					<a href="/productDescription?productId={{row[0]}}">
+						<img src={{ url_for('static', filename='uploads/' + row[5]) }} id="itemImage" />
+					</a>
+				</td>
+				{% endfor %}
+			</tr>
+			<tr id="productPrice">
+				{% for row in data %}
+				<td>
+					书名:{{row[2]}}
+				</td>
+				{% endfor %}
+			</tr>
+		</table>
+		{% endfor %}
+	</div>
+	{% endif %}
+	<div>
+		<h2>热门书籍</h2>
+		{% for data in itemData %}
+		<table>
+			<tr id="productName">
+				{% for row in data %}
+				<td>
+					书籍编号：{{row[1]}}
+				</td>
+				{% endfor %}
+			</tr>
+			<tr id="productImage">
+				{% for row in data %}
+				<td>
+					<a href="/productDescription?productId={{row[0]}}">
+						<img src={{ url_for('static', filename='uploads/' + row[4]) }} id="itemImage" />
+					</a>
+				</td>
+				{% endfor %}
+			</tr>
+			<tr id="productPrice">
+				{% for row in data %}
+				<td>
+					书名：{{row[2]}}
+				</td>
+				{% endfor %}
+			</tr>
+		</table>
+		{% endfor %}
+	</div>
+</div>
+</body>
+</html>
+
