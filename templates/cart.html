@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Welcome</title>
+<link rel="stylesheet" href={{ url_for('static', filename='css/home.css') }} />
+<link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css') }} />
+</head>
+<body>
+<div id="title">
+	<div>
+		<h1 align="center"><font size="15"><font color="#FFFFFF">智能图书推荐系统</font></font></h1>
+	</div>
+	{% if not loggedIn %}
+	<div id="signInButton">
+		<a class="link" href="/loginForm" ><font size="5">登录</font></a>
+	</div>
+	{% else %}
+	<div class="dropdown">
+		<button class="dropbtn">欢迎您, <br>用户ID:{{firstName}}</button>
+		<div class="dropdown-content">
+			<a href="/account/orders">查看书单</a>
+			<a href="/account/profile">个人信息修改</a>
+			<hr>
+			<a href="/logout">登出</a>
+		</div>
+	</div>
+	{% endif %}
+	<div id="kart">
+		<a class="link" href="/cart">
+			为你推荐了 {{noOfItems}} 本书
+		</a>
+		<a class="link" href="/oldcart">
+			历史打分了 {{oldbook}} 本书
+		</a>
+	</div>
+</div>
+<div id="cartItems">
+	<h2>书单</h2>
+	<div id="tableItems">
+		{% for row in products %}
+		<div>
+			<hr id="seperator">
+		<div id="itemImage">
+				<img src="{{row[3]}}" id="image"/>
+			  </div>
+		<div id="itemName">
+				<span id="itemNameTag">书籍编号：{{row[1]}}</span>
+				<a href="/removeFromCart?productId={{row[0]}}">删除</a>
+			  </div>
+
+		<div id="itemPrice">
+				书名:{{row[2]}}
+			  </div>
+			  <hr>推荐书籍评分：
+		<div myId='{{row[1]}}' class="star" data-score="{{row[5]}}" id='socre'></div>
+		</div>
+	</div>
+		{% endfor %}
+		<hr id="seperator">
+		
+	</div>
+</div>
+<script src = "{{url_for('static',filename = 'js/jquery-2.0.3.min.js')}}"></script>
+<script src = "{{url_for('static',filename = 'js/jquery-2.0.3.js')}}"></script>
+<script src = "{{url_for('static',filename = 'js/jquery.raty.js')}}"></script>
+<script type="text/javascript"> 
+    $('.star').each(function(i,e){
+				// var v = $(this).attr("class");
+				$(this).raty({
+						number: 10 ,
+						hints: ['1', '2', '3', '4', '5','6','7','8','9','10'],
+						path:"static/img",
+						starOff: 'star-off.png',
+						starOn: 'star-on.png',
+						cancel: true ,
+						score: function() {
+						return $(this).attr('data-score')},
+						click: function(score, evt) {
+							var data = {
+										data: JSON.stringify({
+										"id":evt.target.parentNode.getAttribute('myId'),"score":score
+											                 })
+											   }
+
+																	
+							$.ajax({   
+								type:"POST",   
+								url:"http://127.0.0.1:5000/cart",  
+								data: data,
+								cache:false, //不缓存此页面   
+								success:function(data){  
+								} 
+							});
+							//$("#sc").val(score);
+					}
+				});
+			});
+</script>
+</body>
+</html>
+
+
+

@@ -6,14 +6,11 @@ class UserCf:
     # 这个类的主要功能是提供一个基于用户的协调过滤算法接口
     
     def __init__(self):
-        self.file_path1 = 'bookrating.csv'
-        self.file_path2 = 'rating.csv'
+        self.file_path = 'bookrating.csv'
         self._init_frame()
 
     def _init_frame(self):
-        self.frame1 = pd.read_csv(self.file_path1)
-        self.frame2 = pd.read_csv(self.file_path2)
-        self.frame = pd.concat([self.frame1,self.frame2])
+        self.frame = pd.read_csv(self.file_path).dropna()
 
     @staticmethod
     def _cosine_sim(target_books, books):
@@ -144,12 +141,8 @@ def run(i):
     res = res.append(DF)
     
 
-file_path1 = 'bookrating.csv'
-file_path2 = 'rating.csv'
-frame1 = pd.read_csv(file_path1)
-frame2 = pd.read_csv(file_path2)
-Data =pd.concat([frame1,frame2])
-Data = pd.read_csv('bookrating.csv')
+
+Data = pd.read_csv('bookrating.csv').dropna()
 res = pd.DataFrame(columns=['UserID','BookID','score'])
 usercf = UserCf()
 #---------------------------------------------------------------------------------------------------------------
@@ -158,12 +151,87 @@ usercf = UserCf()
 #   如果是给定ID  那么 users = ['给定ID']     
 #----------------------------------------------------------------------------------------------------------------
 import random
-users = [random.choice(list(set(frame2['UserID']))) for x in range(20)]
+################################################################
+users = 'id'
+####################################################################
 top_n = 10
-for x in range(len(users)):
-    print(x)
-    run(x)
-    print(res)
+run(x)
+ 
 
-res.to_csv('booktuijian.csv')
+import pymysql
+import pandas as pd
 
+
+class BookSqlTools:
+    #链接MYSQL数据库
+    #读取出来转化成pandas的dataframe格式
+
+    def LinkMysql(self, sql):
+        try:
+            connection = pymysql.connect(user="root",
+                                         password="123456",
+                                         port=3306,
+                                         host="127.0.0.1",   #本地数据库  等同于localhost
+                                         db="book",
+                                         charset="utf8")
+            cur = connection.cursor()
+            print("Mysql数据库连接成功")
+        except Exception as e:
+            print("Mysql数据库连接失败：%s" % e)
+        try:
+            cur.execute(sql)
+            print("SQL语句正确")
+        except Exception as e:
+            print("SQL语句错误：{}".format(e))
+        try:
+            result1 = cur.fetchall()
+            title1 = [i[0] for i in cur.description]
+            Main = pd.DataFrame(result1)
+            Main.columns = title1
+            print("读取Mysql数据库数据成功")
+        except Exception as e:
+            print("读取Mysql数据库数据失败：{}".format(e))
+        return Main
+    
+
+    #数据库中的表插入数据
+    def UpdateMysqlTable(self, data, sql_qingli, sql_insert):
+        try:
+            connection = pymysql.connect(user="root",
+                                         password="123456",
+                                         port=3306,
+                                         host="127.0.0.1",   #本地数据库  等同于localhost
+                                         db="book",
+                                         charset="utf8")
+            cursor = connection.cursor()
+            print("Mysql数据库连接成功")
+        except Exception as e:
+            print("Mysql数据库连接失败：%s" % e)
+        try:
+            cursor.execute(sql_qingli)
+        except:
+            print("未执行建表的SQL语句")
+        try:
+            for i in data.index:
+                x = list(pd.Series(data.ix[i,].astype(str)))
+                sql = sql_insert.format(tuple(x))
+                print(sql)
+                try:
+                    cursor.execute(sql)
+                except:
+                    print("Mysql数据库数据插入失败")
+            print("Mysql数据库数据插入成功")
+        except Exception as e:
+            connection.rollback()
+            print("Mysql数据库数据插入失败%s" % e)
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+
+BookInfoInsert = BookSqlTools()
+
+createBookrecomql = 'xxxxx'
+BooktuijianSql_insert='insert into Booktuijian (BookID,UserID,score) values {}'
+
+BookInfoInsert.UpdateMysqlTable(res,createBookrecomql,BooktuijianSql_insert)

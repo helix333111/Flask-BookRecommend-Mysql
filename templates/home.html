@@ -4,6 +4,7 @@
 <title>Welcome</title>
 <link rel="stylesheet" href={{ url_for('static', filename='css/home.css') }} />
 <link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css') }} />
+
 </head>
 <body>
 <div id="title">
@@ -27,9 +28,21 @@
 	{% endif %}
 	<div id="kart">
 		<a class="link" href="/cart">
-			您阅读了 {{noOfItems}} 本书
+			为你推荐了 {{noOfItems}} 本书
+		</a>
+		<a class="link" href="/oldcart">
+			历史打分了 {{oldbook}} 本书
 		</a>
 	</div>
+</div>
+<div><h1 align="center">
+		<form action="/search" method="GER" > 
+        <div >
+            <input type="text" name="wd"  placeholder="请输入小说名">
+            <input type="submit" value="Book Search">
+        </div>
+    </form>
+    </h1>
 </div>
 <div class="display">
 	<div class="displayCategory">
@@ -53,7 +66,7 @@
 				{% for row in data %}
 				<td>
 					书籍编号:{{row[1]}} 
-					<p>推荐指数:{{row[4]}}  </p>
+					<p>推荐指数:{{row[5]}}  </p>
 				</td>
 				{% endfor %}
 			</tr>
@@ -61,7 +74,7 @@
 				{% for row in data %}
 				<td>
 					<a href="/productDescription?productId={{row[0]}}">
-						<img src={{ url_for('static', filename='uploads/' + row[5]) }} id="itemImage" />
+						<img src="{{row[3]}}" id="itemImage" />
 					</a>
 				</td>
 				{% endfor %}
@@ -92,7 +105,7 @@
 				{% for row in data %}
 				<td>
 					<a href="/productDescription?productId={{row[0]}}">
-						<img src={{ url_for('static', filename='uploads/' + row[4]) }} id="itemImage" />
+						<img src="{{row[4]}}" id="itemImage" />
 					</a>
 				</td>
 				{% endfor %}
@@ -108,6 +121,9 @@
 		{% endfor %}
 	</div>
 </div>
+	
+<script src = "{{url_for('static',filename = 'js/jquery-2.0.3.min.js')}}"></script>
+<script src = "{{url_for('static',filename = 'js/jquery.raty.js')}}"></script>
 </body>
 </html>
 

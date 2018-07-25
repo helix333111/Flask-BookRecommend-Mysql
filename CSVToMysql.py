@@ -22,7 +22,7 @@ class BookSqlTools:
     def LinkMysql(self, sql):
         try:
             connection = pymysql.connect(user="root",
-                                         password="470581985",
+                                         password="123456",
                                          port=3306,
                                          host="127.0.0.1",   #本地数据库  等同于localhost
                                          db="Book",
@@ -51,7 +51,7 @@ class BookSqlTools:
     def UpdateMysqlTable(self, data, sql_qingli, sql_insert):
         try:
             connection = pymysql.connect(user="root",
-                                         password="470581985",
+                                         password="123456",
                                          port=3306,
                                          host="127.0.0.1",   #本地数据库  等同于localhost
                                          db="Book",
@@ -92,7 +92,7 @@ User = pd.read_csv('CleanData/user.csv')
 del User['Unnamed: 0']
 
 createUserSql = '''CREATE TABLE User         
-               (UserID                 INT(10)   ,
+               (UserID                 VARCHAR(100)   ,
                Username                VARCHAR(100)  ,
                Location                VARCHAR(100) ,
                  Age                    VARCHAR(100) );'''
@@ -109,12 +109,16 @@ Book = pd.read_csv('CleanData/book.csv')
 del Book['Unnamed: 0']
 
 createBooksSql =''' CREATE TABLE Books         
-               (BookID                    INT(10)   ,
-                BookTitle                VARCHAR(100)  ,
+               (BookID                   VARCHAR(100) ,
+                BookTitle                VARCHAR(100) ,
                 BookAuthor               VARCHAR(100) ,
-                PubilcationYear          VARCHAR(100) );'''
+                PubilcationYear          VARCHAR(100) ,
+                Publisher                VARCHAR(100) ,
+                ImageS                   VARCHAR(100) ,
+                ImageM                   VARCHAR(100) ,
+                ImageL                   VARCHAR(100));'''
 
-BooksSql_insert='insert into Books (BookID,BookTitle,BookAuthor,PubilcationYear) values {}'
+BooksSql_insert='insert into Books (BookID,BookTitle,BookAuthor,PubilcationYear,Publisher,ImageS,ImageM,ImageL) values {}'
 
 
 BookInfoInsert.UpdateMysqlTable(Book,createBooksSql,BooksSql_insert)
@@ -127,9 +131,9 @@ Rating = pd.read_csv('CleanData/bookrating.csv')
 del Rating['Unnamed: 0']
 
 createBookratingSql = '''CREATE TABLE Bookrating        
-               (UserID                    INT(10)   ,
-                BookID                VARCHAR(100)  ,
-                Rating                VARCHAR(100)  );'''          
+               (UserID                VARCHAR(100) ,
+                BookID                VARCHAR(100) ,
+                Rating                VARCHAR(100));'''          
 
 BookratingSql_insert='insert into Bookrating (UserID,BookID,Rating) values {}'
 
@@ -143,14 +147,15 @@ Booktuijian = pd.read_csv('CleanData/booktuijian.csv')
 Booktuijian['score'] = Booktuijian['score'].apply(lambda x: round(x,2))
 Booktuijian['score'] = 10*(Booktuijian['score'])/(max(Booktuijian['score']))
 
-
-del Booktuijian['Unnamed: 0']
+Booktuijian=Booktuijian[['BookID','UserID','score']]
 
 createBookrecomql = '''CREATE TABLE Booktuijian        
-               (BookID                    INT(100)  ,
-                UserID                    INT(10)   ,
-                score                   FLOAT(5,3)   );'''  
+               (BookID                    VARCHAR(100) ,
+                UserID                    VARCHAR(100) ,
+                score                     FLOAT(5,3)  );'''  
 
 BooktuijianSql_insert='insert into Booktuijian (BookID,UserID,score) values {}'
 
 BookInfoInsert.UpdateMysqlTable(Booktuijian,createBookrecomql ,BooktuijianSql_insert)
+
+

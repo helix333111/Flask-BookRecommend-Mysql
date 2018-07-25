@@ -12,7 +12,6 @@ resultData = pd.DataFrame()
 resultData['UserID'] =Data['User-ID,ISBN,Book-Rating'].apply(lambda x: x.split(';')[0])
 resultData['BookID'] =Data['User-ID,ISBN,Book-Rating'].apply(lambda x: x.split(';')[1])
 resultData['Rating'] =Data['User-ID,ISBN,Book-Rating'].apply(lambda x: x.split(';')[2] if len(x.split(';')) == 3  else 0)
-
 resultData.to_csv('./CleanData/bookrating.csv')
 #%%
 #清理用户表
@@ -40,4 +39,9 @@ resultData['BookAuthor'] =Data['text'].apply(lambda x: x.split(';')[2] if len(x.
 resultData['PubilcationYear'] =Data['text'].apply(lambda x: x.split(';')[3] if len(x.split(';')) >= 4 else 'NULL' )
 resultData['PubilcationYear'] = resultData['PubilcationYear'].apply(lambda x: x if type(x) == int else '2010')
 
+resultData['Publisher'] =Data['text'].apply(lambda x: x.split(';')[4] if len(x.split(';')) >= 5 else 'NULL' )
+
+resultData['ImageS'] =Data['text'].apply(lambda x: x.split(';')[5] if len(x.split(';')) >= 6 else 'NULL' )
+resultData['ImageM'] =Data['text'].apply(lambda x: x.split(';')[6] if len(x.split(';')) >= 7 else 'NULL' )
+resultData['ImageL'] =Data['text'].apply(lambda x: x.split(';')[7] if len(x.split(';')) >= 8 else 'NULL' )
 resultData.to_csv('./CleanData/book.csv')
