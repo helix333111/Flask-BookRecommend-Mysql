@@ -24,8 +24,15 @@ V1.0.0.1 更新
 
 
 项目源码介绍：
+   
+    百度网盘地址： 
+    链接：https://pan.baidu.com/s/1bUOYKcYMXm0HHCQ_YU2jIQ 
+    密码：i76j
 
-20180712
+    联系作者：QQ：470581985
+    CSDN：https://blog.csdn.net/qq_41664845/article/details/81076005
+
+图书推荐系统
 
      |
      -|-----data               >这个文件夹中存放数据集，数据集比较杂乱。
