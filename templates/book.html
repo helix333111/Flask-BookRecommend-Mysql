@@ -8,6 +8,22 @@
 </head>
 <body>
 <div id="title">
+    
+    {% if not loggedIn %}
+    <div id="signInButton">
+        <a class="link" href="/loginForm" ><font color="#FFFFFF">登录</font></a>
+    </div>
+    {% else %}
+    <div class="dropdown">
+        <button class="dropbtn" title="主菜单"><font color="#FFFFFF">{{firstName}}</font></button>
+        <div class="dropdown-content">
+            <a href="/cart">推荐书籍</a>
+            <a href="/oldcart">历史评分</a>
+            <hr>
+            <a href="/logout">安全退出</a>
+        </div>
+    </div>
+    {% endif %}
     <div id="kart">
         <a class="link" href="/"><font color="#FFFFFF">主页</font></a>
         <a class="link" href="/cart"><font color="#FFFFFF">推荐书籍</font></a>
@@ -30,39 +46,19 @@
                 </p>
             </form>
         </div>
-        {% block high_search%}
-        {% endblock %}
-        {% if error%}
-            {% for doc in docs%}
-            <div id="doc">
-                <ul id="navigation">
-                    <p><big><a href="/search/{{doc.id}}/" target="_blank">{{doc.title}}</a></big></p>
-                   
-                <tr id="productImage">  
-                     <td>
-                        <a href="/bookinfo?bookid={{doc.id}}" bookid="{{doc.id}}">
-                            <img src="{{doc.image}}" />
-                        </a>
-                    </td>
-                </tr>
-                
-                <p>作者：{{doc.author}}<br/>出版社:{{doc.Publisher}}<br/>出版时间:{{doc.PubilcationYear}}<br/>
-                  </p>
-                </ul>
-            </div>
-            <br/>
-            {% endfor %}
-        {% block next %}
-        <ul>
-            {% for i in page %}
-                <a href="/search/page/{{i}}/">{{i}}</a>&nbsp;
-            {% endfor %}
-        </ul>
-        {% endblock %}
-        {% else %}
-            <p>对不起，没有您搜索的网页！</p>
-        {% endif %}
+    {% for doc in docs%}
+           
+    
+        <h2 align="center">书籍名称：{{doc.title}}
+        <hr align="center">作者：{{doc.author}}
+        <hr align="center">出版时间:{{doc.PubilcationYear}}
+        <hr align="center">出版社:{{doc.Publisher}}
+        </h2 >
         
-    </div>
+         <p align="center">
+            <img width=100% height=100% src="{{doc.image}}" />
+            </p>
+    {% endfor %}
+  </div>   
 </body>
 </html>

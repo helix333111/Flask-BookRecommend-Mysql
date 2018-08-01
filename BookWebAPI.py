@@ -26,6 +26,7 @@ def LinkMysql(sql):
         result1 = cur.fetchall()
         Main = pd.DataFrame(result1)
     except Exception as e:
+
         print("读取Mysql数据库数据失败：{}".format(e))
     return Main
 
@@ -75,9 +76,9 @@ def root():
 
         likeDatasql = '''select 
                                 a.BookTitle,
-                                a.BookAuthor,
-                                a.PubilcationYear,
                                 a.BookID,
+                                a.PubilcationYear,
+                                a.BookAuthor,
                                 score,
                                 a.ImageM 
                                 from (SELECT * from books ) a  
@@ -92,7 +93,8 @@ def root():
         likeData['score'] = 0
    
     categoryData=[['2010','教育读物']]
-    
+    print(likeData.columns)
+    print(itemData.columns)
     itemDatares=[]
     likeDatares=[]
     for i in itemData.index:
@@ -204,26 +206,28 @@ def search():
     if request.method == 'GET':
         checked = ['checked="true"', '', '']
         wd =  request.values.get('wd')
+        wd = wd.strip()
         sql = "SELECT * from Books where BookTitle like '%{}%' ".format(wd)
+        
         Data = LinkMysql(sql)
-       
+        
         BookTitle = Data['BookTitle'].values
         BookAuthor = Data['BookAuthor'].values
-        
+        PubilcationYear = Data['PubilcationYear'].values
+        Publisher = Data['Publisher'].values
+        ImageM = Data['ImageM'].values
+
         Pagesize=10
-        page = []
-        for i in range(1, (len(Data) // 10 + 2)):
-            page.append(i)
+        page = [1]
         Data = Data.head(10)
         docs =[]
         for i in range(len(Data)):
-            doc  = {'url': '', 'title': BookTitle[i], 'snippet': BookAuthor[i], 'datetime': '2018-01-02', 'time': 'Author:', 'body': BookAuthor[i],
-                   'id': wd, 'extra': []}
+            doc  = {'image': ImageM[i], 'title': BookTitle[i], 'author': BookAuthor[i], 'PubilcationYear': PubilcationYear[i], 'Publisher': Publisher[i], 
+                   'id': wd }
             docs.append(doc)
 
         return render_template('high_search.html', checked=checked, key=wd, docs=docs, page=page,
                                    error=True)
-
 
 
 @app.route("/cart",methods = ['POST', 'GET'])
@@ -286,13 +290,7 @@ def oldcart():
     if 'userid' not in session:
         return redirect(url_for('loginForm'))
     loggedIn, firstName, noOfItems,oldbook = getLoginDetails()
-    conn = pymysql.connect(user="root",
-                                 password="123456",
-                                 port=3306,
-                                 host="127.0.0.1",   #本地数据库  等同于localhost
-                                 db="Book",
-                                 charset="utf8")
-    cur = conn.cursor()
+ 
 
     itemDatasql  = '''select 
                                 BookTitle,
@@ -313,6 +311,29 @@ def oldcart():
 
 
 
+@app.route("/bookinfo",methods = ['POST', 'GET'])
+def bookinfo():
+    if 'userid' not in session:
+        return redirect(url_for('loginForm'))
+    loggedIn, firstName, noOfItems,oldbook = getLoginDetails()
+   
 
+    if request.method == 'GET':
+        ID = request.args.get('bookid')
+        
+        sql = "SELECT * from Books where BookID={} ".format(ID)
+        Data = LinkMysql(sql)
+        Data=Data.fillna('缺失')
+        BookTitle = Data['BookTitle'].values
+        BookAuthor = Data['BookAuthor'].values
+        PubilcationYear = Data['PubilcationYear'].values
+        Publisher = Data['Publisher'].values
+        ImageL = Data['ImageL'].values
+        
+        Data = Data.head(10)
+        docs =[{'image': ImageL[0], 'title': BookTitle[0], 'author': BookAuthor[0], 'PubilcationYear': PubilcationYear[0], 'Publisher': Publisher[0], 
+                   'id': ID }]
+       
+    return render_template("book.html",  docs=docs,oldbook=oldbook, loggedIn=loggedIn, firstName=firstName, noOfItems=noOfItems)
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,79 +1,71 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Welcome</title>
+<title>智能图书推荐系统</title>
 <link rel="stylesheet" href={{ url_for('static', filename='css/home.css') }} />
 <link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css') }} />
 
 </head>
 <body>
 <div id="title">
-	<div>
-		<h1 align="center"><font size="15"><font color="#FFFFFF">智能图书推荐系统</font></font></h1>
-	</div>
+	
 	{% if not loggedIn %}
 	<div id="signInButton">
-		<a class="link" href="/loginForm" ><font size="5">登录</font></a>
+		<a class="link" href="/loginForm" ><font color="#FFFFFF">登录</font></a>
 	</div>
 	{% else %}
 	<div class="dropdown">
-		<button class="dropbtn">欢迎您, <br>用户ID:{{firstName}}</button>
+		<button class="dropbtn" title="主菜单"><font color="#FFFFFF">{{firstName}}</font></button>
 		<div class="dropdown-content">
-			<a href="/account/orders">查看书单</a>
-			<a href="/account/profile">个人信息修改</a>
+			<a href="/cart">推荐书籍</a>
+			<a href="/oldcart">历史评分</a>
 			<hr>
-			<a href="/logout">登出</a>
+			<a href="/logout">安全退出</a>
 		</div>
 	</div>
 	{% endif %}
 	<div id="kart">
-		<a class="link" href="/cart">
-			为你推荐了 {{noOfItems}} 本书
-		</a>
-		<a class="link" href="/oldcart">
-			历史打分了 {{oldbook}} 本书
-		</a>
+		<a class="link" href="/"><font color="#FFFFFF">主页</font></a>
+		<a class="link" href="/cart"><font color="#FFFFFF">推荐书籍</font></a>
+		<a class="link" href="/oldcart"><font color="#FFFFFF">历史评分</font></a>
+	</div>
+	<div>
+		<h1 align="center"><font size="15"><font color="#FFFFFF">智能图书推荐系统</font></font></h1>
 	</div>
 </div>
-<div><h1 align="center">
-		<form action="/search" method="GER" > 
-        <div >
-            <input type="text" name="wd"  placeholder="请输入小说名">
-            <input type="submit" value="Book Search">
-        </div>
+
+	<div class="search bar7">
+        <form action="/search" method="GET">
+            <input type="text" name="wd" placeholder="请输入小说名">
+            <button type="submit"></button>
+        </form>
+    </div>
     </form>
-    </h1>
-</div>
+    
+
 <div class="display">
-	<div class="displayCategory">
-		<h2>书籍分类: </h2>
-		<ul>
-			{% for row in categoryData %}
-			<li><a href="/displayCategory?categoryId={{row[0]}}">{{row[1]}}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
 	{% if not loggedIn %}
 	<div>
-		<h2>猜你喜欢：请登陆，将推荐合适您的书籍！</h2>
+		
+		<h2>猜你喜欢：<a class="link" href="/loginForm" ><font color="#6666FF">点击这里登录</font></a></h2>
+		<hr>
 	</div>
 	{% else %}
 	<div>
-		<h2>{{firstName}}， 猜你喜欢：</h2>
+		<h2>猜你喜欢：</h2>
 		{% for data in likeData %}
-		<table>
+		<table width="2000px" class="mytable">
 			<tr id="productName">
 				{% for row in data %}
 				<td>
-					书籍编号:{{row[1]}} 
-					<p>推荐指数:{{row[5]}}  </p>
+					推荐分：{{row[5]}} 
 				</td>
 				{% endfor %}
 			</tr>
 			<tr id="productImage">
 				{% for row in data %}
 				<td>
-					<a href="/productDescription?productId={{row[0]}}">
+					<a href="/bookinfo?bookid={{row[1]}}" bookid="{{row[1]}}">
 						<img src="{{row[3]}}" id="itemImage" />
 					</a>
 				</td>
@@ -81,8 +73,8 @@
 			</tr>
 			<tr id="productPrice">
 				{% for row in data %}
-				<td>
-					书名:{{row[2]}}
+				<td >
+					{{row[2]}}
 				</td>
 				{% endfor %}
 			</tr>
@@ -91,20 +83,22 @@
 	</div>
 	{% endif %}
 	<div>
+		
 		<h2>热门书籍</h2>
+		<hr>
 		{% for data in itemData %}
-		<table>
+		<table  width="2000px" class="mytable">
 			<tr id="productName">
 				{% for row in data %}
 				<td>
-					书籍编号：{{row[1]}}
+					ID：{{row[1]}}
 				</td>
 				{% endfor %}
 			</tr>
 			<tr id="productImage">
 				{% for row in data %}
 				<td>
-					<a href="/productDescription?productId={{row[0]}}">
+					<a href="/bookinfo?bookid={{row[1]}}" bookid="{{row[1]}}">
 						<img src="{{row[4]}}" id="itemImage" />
 					</a>
 				</td>
@@ -113,7 +107,7 @@
 			<tr id="productPrice">
 				{% for row in data %}
 				<td>
-					书名：{{row[2]}}
+					{{row[2]}}
 				</td>
 				{% endfor %}
 			</tr>

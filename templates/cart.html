@@ -1,39 +1,51 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Welcome</title>
+<title>智能图书推荐系统</title>
 <link rel="stylesheet" href={{ url_for('static', filename='css/home.css') }} />
 <link rel="stylesheet" href={{ url_for('static', filename='css/topStyle.css') }} />
+
 </head>
 <body>
 <div id="title">
-	<div>
-		<h1 align="center"><font size="15"><font color="#FFFFFF">智能图书推荐系统</font></font></h1>
-	</div>
-	{% if not loggedIn %}
-	<div id="signInButton">
-		<a class="link" href="/loginForm" ><font size="5">登录</font></a>
-	</div>
-	{% else %}
-	<div class="dropdown">
-		<button class="dropbtn">欢迎您, <br>用户ID:{{firstName}}</button>
-		<div class="dropdown-content">
-			<a href="/account/orders">查看书单</a>
-			<a href="/account/profile">个人信息修改</a>
-			<hr>
-			<a href="/logout">登出</a>
-		</div>
-	</div>
-	{% endif %}
-	<div id="kart">
-		<a class="link" href="/cart">
-			为你推荐了 {{noOfItems}} 本书
-		</a>
-		<a class="link" href="/oldcart">
-			历史打分了 {{oldbook}} 本书
-		</a>
-	</div>
+    
+    {% if not loggedIn %}
+    <div id="signInButton">
+        <a class="link" href="/loginForm" ><font color="#FFFFFF">登录</font></a>
+    </div>
+    {% else %}
+    <div class="dropdown">
+        <button class="dropbtn" title="主菜单"><font color="#FFFFFF">{{firstName}}</font></button>
+        <div class="dropdown-content">
+            <a href="/cart">推荐书籍</a>
+            <a href="/oldcart">历史评分</a>
+            <hr>
+            <a href="/logout">安全退出</a>
+        </div>
+    </div>
+    {% endif %}
+    <div id="kart">
+        <a class="link" href="/"><font color="#FFFFFF">主页</font></a>
+        <a class="link" href="/cart"><font color="#FFFFFF">推荐书籍</font></a>
+        <a class="link" href="/oldcart"><font color="#FFFFFF">历史评分</font></a>
+    </div>
+    <div>
+        <h1 align="center"><font size="15"><font color="#FFFFFF">智能图书推荐系统</font></font></h1>
+    </div>
 </div>
+    <div >
+            <div class="search bar7">
+            <form action="/search" method="GET">
+                <p>
+                    {% if key %}
+                        <input type="text" name="wd" value="{{key}}">
+                    {% else %}
+                        <input type="text" name="wd">
+                    {% endif %}
+                     <button type="submit"></button>
+                </p>
+            </form>
+        </div>
 <div id="cartItems">
 	<h2>书单</h2>
 	<div id="tableItems">
@@ -41,11 +53,11 @@
 		<div>
 			<hr id="seperator">
 		<div id="itemImage">
+            <a href="/bookinfo?bookid={{row[1]}}" bookid="{{row[1]}}"> 
 				<img src="{{row[3]}}" id="image"/>
 			  </div>
 		<div id="itemName">
 				<span id="itemNameTag">书籍编号：{{row[1]}}</span>
-				<a href="/removeFromCart?productId={{row[0]}}">删除</a>
 			  </div>
 
 		<div id="itemPrice">

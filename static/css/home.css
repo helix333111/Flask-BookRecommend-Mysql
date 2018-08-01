@@ -16,12 +16,12 @@ table {
 }
 
 #productName {
-	text-align: center;
+	text-align: left;
 	font-weight: bold;
 }
 
 #productPrice {
-	text-align: center;
+	text-align: left;
 }
 
 .displayCategory ul li {
