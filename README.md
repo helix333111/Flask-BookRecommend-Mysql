@@ -38,6 +38,7 @@ V1.0.0.1 更新
     密码：i76j
 
     联系作者：QQ：470581985
+    数据集下载地址:http://www2.informatik.uni-freiburg.de/~cziegler/BX/
     CSDN：https://blog.csdn.net/qq_41664845/article/details/81076005
 
 图书推荐系统
@@ -70,7 +71,9 @@ V1.0.0.1 更新
 
 
 项目启动方式：
-
+    
+    数据集下载地址:http://www2.informatik.uni-freiburg.de/~cziegler/BX/
+    
     1.首先在mysql建立一个数据库，库名为Book。
     2.运行CSVToMysql.py文件 将数据导入到mysql中。
     3.运行NewRatingToMysql.py文件 将数据导入到mysql中。
