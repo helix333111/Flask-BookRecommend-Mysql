@@ -6,14 +6,12 @@ class UserCf:
     # 这个类的主要功能是提供一个基于用户的协调过滤算法接口
     
     def __init__(self):
-        self.file_path1 = 'bookrating.csv'
-        self.file_path2 = 'rating.csv'
+        self.file_path = './data/BX-Book-Ratings.csv'
         self._init_frame()
 
     def _init_frame(self):
-        self.frame1 = pd.read_csv(self.file_path1)
-        self.frame2 = pd.read_csv(self.file_path2)
-        self.frame = pd.concat([self.frame1,self.frame2])
+        self.frame = pd.read_csv(self.file_path,sep=None, error_bad_lines=False)
+        self.frame.columns=['UserID','BookID','Rating'] 
 
     @staticmethod
     def _cosine_sim(target_books, books):
@@ -22,9 +20,7 @@ class UserCf:
         e.g: x = [1 0 1 1 0], y = [0 1 1 0 1](x1^2+x2^2+...)+sqrt(y1^2+y2^2+...)]
              cosine = (x1*y1+x2*y2+...) / [sqrt
              that means union_len(movies1, movies2) / sqrt(len(movies1)*len(movies2))
-             上面是算法的公式，关于基于用户协调过滤算法的理解你可以看你的论文。
-             我讲的可能没论文写得到位
-             return的值cosine就是相似度。用到的知识是线性代数求cos角度数。举个列子 空间上面有 2个点A,B。与
+             上面是算法的公式，return的值cosine就是相似度。用到的知识是线性代数求cos角度数。举个列子 空间上面有 2个点A,B。与
              坐标原点（0,0）组成AOB三角形，角AOB的度数越小，那么表示两个坐标点越相近。代入这个书籍推荐上面
              我们这样理解：
              用户A=[‘书1’，‘书2’，‘书3’]=['1','2','3'] ID代表书籍的编号
@@ -34,7 +30,6 @@ class UserCf:
              求cosAOB = x  cosAOC = y
              很明显 X< Y 那么 证明用户B距离用户A更近，即B的阅读兴趣与A跟相似，于是
              我们可以把B阅读的书籍推荐给A
-
              我们用这个方法可以得到最相似的用户，但是还得不到最适合推荐的书籍。这个可以在
              get_topn_items这个方法中解决。
         '''

@@ -28,22 +28,22 @@ class BookSqlTools:
                                          db="Book",
                                          charset="utf8")
             cur = connection.cursor()
-            print("Mysql数据库连接成功")
+            
         except Exception as e:
-            print("Mysql数据库连接失败：%s" % e)
+            print("Mysql link fail：%s" % e)
         try:
             cur.execute(sql)
-            print("SQL语句正确")
+            
         except Exception as e:
-            print("SQL语句错误：{}".format(e))
+            print("dont do execute sql")
         try:
             result1 = cur.fetchall()
             title1 = [i[0] for i in cur.description]
             Main = pd.DataFrame(result1)
             Main.columns = title1
-            print("读取Mysql数据库数据成功")
+            
         except Exception as e:
-            print("读取Mysql数据库数据失败：{}".format(e))
+            print(" select Mysql error：{}".format(e))
         return Main
     
 
@@ -57,88 +57,103 @@ class BookSqlTools:
                                          db="Book",
                                          charset="utf8")
             cursor = connection.cursor()
-            print("Mysql数据库连接成功")
+            
         except Exception as e:
-            print("Mysql数据库连接失败：%s" % e)
+            print("Mysql link fail：%s" % e)
         try:
             cursor.execute(sql_qingli)
         except:
-            print("未执行建表的SQL语句")
+            print("dont do created table sql")
         try:
             for i in data.index:
                 x = list(pd.Series(data.ix[i,].astype(str)))
-                sql = sql_insert.format(tuple(x))
+                sql = sql_insert.format(tuple(x)).encode(encoding='utf-8')
                 print(sql)
                 try:
                     cursor.execute(sql)
-                except:
-                    print("Mysql数据库数据插入失败")
-            print("Mysql数据库数据插入成功")
+                except Exception as e:
+                    print("Mysql insert fail%s" % e)
         except Exception as e:
             connection.rollback()
-            print("Mysql数据库数据插入失败%s" % e)
+            print("Mysql insert fail%s" % e)
         connection.commit()
         cursor.close()
         connection.close()
 
 
+
+
+connection = pymysql.connect(user="root",
+                                         password="123456",
+                                         port=3306,
+                                         host="127.0.0.1",   
+                                         charset="utf8")
+
+cur = connection.cursor()
+cur.execute('DROP DATABASE if exists Book')
+cur.execute('CREATE DATABASE if not exists Book')
+connection.commit()
+cur.close()
+connection.close()
+
+
+
+
+
 BookInfoInsert = BookSqlTools()
-
 #--------------------------------------------------------------------------
-#读取本地的User.csv文件  在数据库中建一个User表   将User.csv内容插入到数据库中
+#读取本地的BX-Users.csv文件  在数据库中建一个User表   将User.csv内容插入到数据库中
 #--------------------------------------------------------------------------
-
-User = pd.read_csv('CleanData/user.csv')
-del User['Unnamed: 0']
+path = './data/BX-Users.csv'
+User = pd.read_csv(path, sep=None, error_bad_lines=False)
 
 createUserSql = '''CREATE TABLE User         
                (UserID                 VARCHAR(100)   ,
-               Username                VARCHAR(100)  ,
-               Location                VARCHAR(100) ,
+               Location                VARCHAR(100)  , 
                  Age                    VARCHAR(100) );'''
 
-UserSql_insert='insert into User (UserID,Username,Location,Age) values {}'
+UserSql_insert='insert into User (UserID,Location,Age) values {}'
 
 BookInfoInsert.UpdateMysqlTable(User,createUserSql,UserSql_insert)
-
+del User
 #--------------------------------------------------------------------------
-#读取本地的book.csv文件  在数据库中建一个Books表   将book.csv内容插入到数据库中
+#读取本地的BX-Books.csv文件  在数据库中建一个Books表   将book.csv内容插入到数据库中
 #--------------------------------------------------------------------------
 
-Book = pd.read_csv('CleanData/book.csv')
-del Book['Unnamed: 0']
+path = './data/BX-Books.csv'
+Book = pd.read_csv(path, sep=None, error_bad_lines=False)
 
 createBooksSql =''' CREATE TABLE Books         
-               (BookID                   VARCHAR(100) ,
-                BookTitle                VARCHAR(100) ,
-                BookAuthor               VARCHAR(100) ,
-                PubilcationYear          VARCHAR(100) ,
-                Publisher                VARCHAR(100) ,
-                ImageS                   VARCHAR(100) ,
-                ImageM                   VARCHAR(100) ,
-                ImageL                   VARCHAR(100));'''
+               (BookID                   VARCHAR(999) ,
+                BookTitle                VARCHAR(999) ,
+                BookAuthor               VARCHAR(999) ,
+                PubilcationYear          VARCHAR(999) ,
+                Publisher                VARCHAR(999) ,
+                ImageS                   VARCHAR(999) ,
+                ImageM                   VARCHAR(999) ,
+                ImageL                   VARCHAR(999));'''
 
 BooksSql_insert='insert into Books (BookID,BookTitle,BookAuthor,PubilcationYear,Publisher,ImageS,ImageM,ImageL) values {}'
 
-
 BookInfoInsert.UpdateMysqlTable(Book,createBooksSql,BooksSql_insert)
+del Book
 
 #--------------------------------------------------------------------------
-#读取本地的bookrating.csv文件  在数据库中建一个Bookrating表   将bookrating.csv内容插入到数据库中
+#读取本地的BX-Book-Ratings文件  在数据库中建一个Bookrating表   将bookrating.csv内容插入到数据库中
 #--------------------------------------------------------------------------
 
-Rating = pd.read_csv('CleanData/bookrating.csv')
-del Rating['Unnamed: 0']
+path = './data/BX-Book-Ratings.csv'
+Rating = pd.read_csv(path, sep=None, error_bad_lines=False)
 
 createBookratingSql = '''CREATE TABLE Bookrating        
-               (UserID                VARCHAR(100) ,
-                BookID                VARCHAR(100) ,
-                Rating                VARCHAR(100));'''          
+               (UserID                VARCHAR(999) ,
+                BookID                VARCHAR(999) ,
+                Rating                VARCHAR(999));'''          
 
 BookratingSql_insert='insert into Bookrating (UserID,BookID,Rating) values {}'
 
 BookInfoInsert.UpdateMysqlTable(Rating,createBookratingSql,BookratingSql_insert)
-
+del Rating
 #--------------------------------------------------------------------------
 #读取本地的Booktuijian.csv文件  在数据库中建一个Booktuijian表   将Booktuijian.csv内容插入到数据库中
 #--------------------------------------------------------------------------
@@ -150,8 +165,8 @@ Booktuijian['score'] = 10*(Booktuijian['score'])/(max(Booktuijian['score']))
 Booktuijian=Booktuijian[['BookID','UserID','score']]
 
 createBookrecomql = '''CREATE TABLE Booktuijian        
-               (BookID                    VARCHAR(100) ,
-                UserID                    VARCHAR(100) ,
+               (UserID                    VARCHAR(999) ,
+                BookID                    VARCHAR(999) ,
                 score                     FLOAT(5,3)  );'''  
 
 BooktuijianSql_insert='insert into Booktuijian (BookID,UserID,score) values {}'

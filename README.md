@@ -16,6 +16,10 @@
 ## `推荐`
 <img src="./image/img4.png" width="350" height="250"><br>
 
+## V1.0.0.3 更新
+
+    介于很多同学需要数据，和对项目部署困难，现在将项目结构整体优化了。更容易部署了，随下随用
+
 ## V1.0.0.2 更新
 
     1.优化了搜索框的样式
@@ -49,18 +53,12 @@
 图书推荐系统
 
 >      data               >这个文件夹中存放数据集，数据集比较杂乱。   
->>       BX-Books.csv     >关于27万条的数据信息，涉及书籍编号，书籍名，书籍作者....
->>       BX-Users.csv     >关于27万条的用户信息，涉及用户ID，用户区县，用户省份，用户年龄。
->>       Rating1M.csv
->     CleanData           >这个文件夹中存放清洗好的数据集，将上面数据清理出需要的数据。
->>       book.csv         >关于27万条的数据信息，保留书籍编号，书籍名，书籍作者，出版年份。
->>       user.csv         >关于27万条的用户信息，保留了用户ID，用户区县，用户省份，用户年龄。
->>                   并且将用户ID,和用户区县作为账号密码用于网站登录。
->>       bookrating.csv   >关于100万条的用户对数据的评分数据。保留用户ID，书籍ID，评分。（评分1-10为标准）
->>       booktuijian.csv  >关于10个测试用户和对其推荐书籍的信息。涉及用户ID，书籍ID，推荐指数。（评分1-10为标准）
+>>       BX-Books.csv        >关于27万条的书籍的信息，涉及书籍编号，书籍名，书籍作者....
+>>       BX-Users.csv        >关于27万条的用户信息，涉及用户ID，用户区县，用户省份，用户年龄。
+>>       BX-Book-Ratings.csv >近115万条的用户评分信息，涉及到用户ID，书籍ID，打分rating    
+>>       booktuijian.csv     >这个将会由算法计算产生推荐结果。
 >     BookWebAPI.py       >启动这个文件开启服务器。启动方式：在更目录下进入cmd输入    python BookWebAPI.py  
->     CleanCSV.py         >清洗原先杂乱的csv文件，保存到cleanData文件夹下面。
->     CSVToMysql.py       >将清洗好的文件，即CleanData里面的文件，导入到mysql中。
+>     CSVToMysql.py       >读取data文件夹里面的书籍存储到数据库中。
 >     CF                  >协同过滤1：CF 算法
 >     slope one           >协同过滤2：slope one 算法
 >     其他文件夹           >提供给前端页面和前端页面的依赖
@@ -69,12 +67,12 @@
 ## 项目启动方式：
 
     数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
-    注意下载好的数据集导入到mysql中，代码可能不能直接跑出来，可以结合代码思路自行修改。
-    1.首先在mysql建立一个数据库，库名为Book。
-    2.运行CSVToMysql.py文件 将数据导入到mysql中。
-    3.运行NewRatingToMysql.py文件 将数据导入到mysql中。
-    4.进入BookwebAPI 运行即可。  登录的账号为user表中的userID，密码为user表中的Username
-    如果需要测试推荐功能，可以登录usertuijian表中的userid对应的账户。（账号为userid，密码为usename，存在user表中）可以对推荐的书籍从新打分。    
+    * 将下好的数据集放到data文件夹下
+    * 运行CSVToMysql.py文件 将数据导入到mysql中。
+    * 进入BookwebAPI 运行即可。  
+
+    如果需要测试推荐功能，需要计算推荐表 也就是生成booktuijian.csv文件，并将其导入mysql数据库中
+    账号为userid，密码为userid）可以对推荐的书籍从新打分。    
 
 
 ## 项目思路：
