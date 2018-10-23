@@ -3,17 +3,17 @@
 # 智能图书推荐系统                          
 ------------------------------------------------------------------------------------------------
 
-[互联网访问地址](http://198.56.183.11:8080) 
+互联网访问地址[http://198.56.183.11:8080](http://198.56.183.11:8080) 
 
-[数据集下载地址](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
+数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
 
- `主页`<br>
+## `主页`
 <img src="./image/img1.png" width="350" height="250"><br>
-`搜索功能`<br>
+## `搜索功能`
 <img src="./image/img2.png" width="350" height="250"><br>
-`登录`<br>
+## `登录`
 <img src="./image/img3.png" width="350" height="250"><br>
-`推荐`<br>
+## `推荐`
 <img src="./image/img4.png" width="350" height="250"><br>
 
 ## V1.0.0.2 更新
@@ -48,30 +48,27 @@
 
 图书推荐系统
 
->        data               >这个文件夹中存放数据集，数据集比较杂乱。
->>         
+>      data               >这个文件夹中存放数据集，数据集比较杂乱。   
 >>       BX-Books.csv     >关于27万条的数据信息，涉及书籍编号，书籍名，书籍作者....
 >>       BX-Users.csv     >关于27万条的用户信息，涉及用户ID，用户区县，用户省份，用户年龄。
 >>       Rating1M.csv
->         CleanData         >这个文件夹中存放清洗好的数据集，将上面数据清理出需要的数据。
->>
+>     CleanData           >这个文件夹中存放清洗好的数据集，将上面数据清理出需要的数据。
 >>       book.csv         >关于27万条的数据信息，保留书籍编号，书籍名，书籍作者，出版年份。
 >>       user.csv         >关于27万条的用户信息，保留了用户ID，用户区县，用户省份，用户年龄。
 >>                   并且将用户ID,和用户区县作为账号密码用于网站登录。
 >>       bookrating.csv   >关于100万条的用户对数据的评分数据。保留用户ID，书籍ID，评分。（评分1-10为标准）
 >>       booktuijian.csv  >关于10个测试用户和对其推荐书籍的信息。涉及用户ID，书籍ID，推荐指数。（评分1-10为标准）
->        BookWebAPI.py     >启动这个文件开启服务器。启动方式：在更目录下进入cmd输入    python BookWebAPI.py  
->        CleanCSV.py       >清洗原先杂乱的csv文件，保存到cleanData文件夹下面。
->        CSVToMysql.py     >将清洗好的文件，即CleanData里面的文件，导入到mysql中。
->        CF                >协同过滤1：CF 算法
->        slope one         >协同过滤2：slope one 算法
->        其他文件夹          >提供给前端页面和前端页面的依赖
+>     BookWebAPI.py       >启动这个文件开启服务器。启动方式：在更目录下进入cmd输入    python BookWebAPI.py  
+>     CleanCSV.py         >清洗原先杂乱的csv文件，保存到cleanData文件夹下面。
+>     CSVToMysql.py       >将清洗好的文件，即CleanData里面的文件，导入到mysql中。
+>     CF                  >协同过滤1：CF 算法
+>     slope one           >协同过滤2：slope one 算法
+>     其他文件夹           >提供给前端页面和前端页面的依赖
 
 
 ## 项目启动方式：
 
-[数据集下载地址](http://www2.informatik.uni-freiburg.de/~cziegler/BX/)
-
+    数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
     注意下载好的数据集导入到mysql中，代码可能不能直接跑出来，可以结合代码思路自行修改。
     1.首先在mysql建立一个数据库，库名为Book。
     2.运行CSVToMysql.py文件 将数据导入到mysql中。
