@@ -8,17 +8,17 @@
 数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
 
 ## `主页`
-<img src="./image/img1.png" width="350" height="250"><br>
+<img src="./image/img1.jpg" width="350" height="250"><br>
 ## `搜索功能`
-<img src="./image/img2.png" width="350" height="250"><br>
+<img src="./image/img2.jpg" width="350" height="250"><br>
 ## `登录`
-<img src="./image/img3.png" width="350" height="250"><br>
+<img src="./image/img3.jpg" width="350" height="250"><br>
 ## `推荐`
-<img src="./image/img4.png" width="350" height="250"><br>
+<img src="./image/img4.jpg" width="350" height="250"><br>
 ## `推荐数据书单`
-<img src="./image/img5.png" width="350" height="250"><br>
+<img src="./image/img5.jpg" width="350" height="250"><br>
 ## `历史评分书单`
-<img src="./image/img6.png" width="350" height="250"><br>
+<img src="./image/img6.jpg" width="350" height="250"><br>
 
 ## V1.0.0.3 更新
 
@@ -74,9 +74,9 @@
 ## 项目启动方式：
 
 数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
-    * 将下好的数据集放到data文件夹下
-    * 运行CSVToMysql.py文件 将数据导入到mysql中。
-    * 进入BookwebAPI 运行即可。  
+* 将下好的数据集放到data文件夹下
+* 运行CSVToMysql.py文件 将数据导入到mysql中。
+* 进入BookwebAPI 运行即可。  
 
 如果需要测试推荐功能，需要计算推荐表 也就是生成booktuijian.csv文件，并将其导入mysql数据库中
 `计算方式`：
@@ -84,8 +84,8 @@
 *  使用UserID和Location作为账号密码登录网站。
 
 example：
-`UserID`：39027
-`UserName`：tempe, arizona, usa
+* `UserID`：39027
+* `UserName`：tempe, arizona, usa
 
 ## 项目思路：
 
