@@ -158,7 +158,7 @@ del Rating
 #读取本地的Booktuijian.csv文件  在数据库中建一个Booktuijian表   将Booktuijian.csv内容插入到数据库中
 #--------------------------------------------------------------------------
 
-Booktuijian = pd.read_csv('CleanData/booktuijian.csv')
+Booktuijian = pd.read_csv('data/booktuijian.csv')
 Booktuijian['score'] = Booktuijian['score'].apply(lambda x: round(x,2))
 Booktuijian['score'] = 10*(Booktuijian['score'])/(max(Booktuijian['score']))
 

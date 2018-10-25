@@ -48,7 +48,7 @@ def getLoginDetails():
         oldbook = [0]
     else:
         loggedIn = True
-        cur.execute("SELECT UserID, Username FROM User WHERE UserID = " + session['userid'] )
+        cur.execute("SELECT UserID, Location as Username FROM User WHERE UserID = " + session['userid'] )
         firstName,userId = cur.fetchone()
         try:
             sql = "SELECT count(1) FROM booktuijian WHERE UserID = " + str(firstName)
@@ -125,7 +125,7 @@ def updateProfile():
                                  charset="utf8")
         cur = conn.cursor()
         try:
-            cur.execute("insert into User (UserID,Username,Location,Age) values ('{}','{}','{}')".format(UserID, Username, Age))
+            cur.execute("insert into User (UserID,Location,Age) values ('{}','{}','{}')".format(UserID, Username, Age))
             con.commit()
             print("Saved Successfully")
         except:
@@ -158,7 +158,7 @@ def is_valid(userid, username):
                          charset="utf8")
     cur = conn.cursor()
     try:
-        sql = "SELECT UserID, Username FROM User where UserID={} and Username ='{}'".format(userid, username)
+        sql = "SELECT UserID, Location as Username FROM User where UserID={} and Location ='{}'".format(userid, username)
         cur.execute(sql)
         data = cur.fetchone()
         conn.close()

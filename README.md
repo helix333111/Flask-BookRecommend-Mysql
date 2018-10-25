@@ -48,6 +48,9 @@
  
 ## 联系作者：QQ：470581985
 
+百度网盘完整源码，带数据和推荐:
+链接：[https://pan.baidu.com/s/1WKZnUVUImUO6RMfcGo3s_w](https://pan.baidu.com/s/1WKZnUVUImUO6RMfcGo3s_w) 提取码：w26s
+
 ## 项目源码介绍
 
 图书推荐系统
@@ -66,13 +69,16 @@
 
 ## 项目启动方式：
 
-    数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
+数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
     * 将下好的数据集放到data文件夹下
     * 运行CSVToMysql.py文件 将数据导入到mysql中。
     * 进入BookwebAPI 运行即可。  
 
-    如果需要测试推荐功能，需要计算推荐表 也就是生成booktuijian.csv文件，并将其导入mysql数据库中
-    账号为userid，密码为userid）可以对推荐的书籍从新打分。    
+如果需要测试推荐功能，需要计算推荐表 也就是生成booktuijian.csv文件，并将其导入mysql数据库中
+`计算方式`：
+*  将BX-Book-Rating.csv文件放入CF文件夹下，运行CF.py文件,将生成的book推荐表放入data文件夹下，执行CSVToMysql.py，导入推荐表的部分。
+*  使用UserID和Location作为账号密码登录网站。
+
 
 
 ## 项目思路：

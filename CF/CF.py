@@ -6,7 +6,7 @@ class UserCf:
     # 这个类的主要功能是提供一个基于用户的协调过滤算法接口
     
     def __init__(self):
-        self.file_path = './data/BX-Book-Ratings.csv'
+        self.file_path = './BX-Book-Ratings.csv'
         self._init_frame()
 
     def _init_frame(self):
@@ -139,12 +139,9 @@ def run(i):
     res = res.append(DF)
     
 
-file_path1 = 'bookrating.csv'
-file_path2 = 'rating.csv'
-frame1 = pd.read_csv(file_path1)
-frame2 = pd.read_csv(file_path2)
-Data =pd.concat([frame1,frame2])
-Data = pd.read_csv('bookrating.csv')
+path = './BX-Book-Ratings.csv'
+Data = pd.read_csv(path, sep=None, error_bad_lines=False)
+Data.columns = ['UserID','BookID','Rating']
 res = pd.DataFrame(columns=['UserID','BookID','score'])
 usercf = UserCf()
 #---------------------------------------------------------------------------------------------------------------
@@ -153,12 +150,11 @@ usercf = UserCf()
 #   如果是给定ID  那么 users = ['给定ID']     
 #----------------------------------------------------------------------------------------------------------------
 import random
-users = [random.choice(list(set(frame2['UserID']))) for x in range(20)]
+users = [random.choice(list(set(Data['UserID']))) for x in range(20)]
 top_n = 10
 for x in range(len(users)):
     print(x)
     run(x)
     print(res)
-
-res.to_csv('booktuijian.csv')
+res.to_csv('booktuijian.csv',index=False)
 
