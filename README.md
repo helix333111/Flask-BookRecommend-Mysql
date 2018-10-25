@@ -15,6 +15,10 @@
 <img src="./image/img3.png" width="350" height="250"><br>
 ## `推荐`
 <img src="./image/img4.png" width="350" height="250"><br>
+## `推荐数据书单`
+<img src="./image/img5.png" width="350" height="250"><br>
+## `历史评分书单`
+<img src="./image/img6.png" width="350" height="250"><br>
 
 ## V1.0.0.3 更新
 
@@ -79,7 +83,9 @@
 *  将BX-Book-Rating.csv文件放入CF文件夹下，运行CF.py文件,将生成的book推荐表放入data文件夹下，执行CSVToMysql.py，导入推荐表的部分。
 *  使用UserID和Location作为账号密码登录网站。
 
-
+example：
+`UserID`：39027
+`UserName`：tempe, arizona, usa
 
 ## 项目思路：
 
