@@ -28,14 +28,15 @@
         
         环境：ubuntu 
         内存：64G
-        显卡：TaiTanXP * 4
+        显卡：TaiTanXP * 4  （4*12G）
 
 速度有比较大的提升。一天内可以训练完成。但是内存占用极高。接近42G内存。
 所以在git上面CF4TensorFlow.py这个文件中第12行：    
 *  Rating=Rating[:5000]    
 设置了一个切片区间，默认使用5000，你可以按你的配置修改这个参数。
 
-
+## `作者选择 Rating[:10000] Epoch 60000 Loss函数 `
+<img src="./image/img7.jpg" width="350" height="250"><br>
 
 ## V1.0.0.3 更新
 

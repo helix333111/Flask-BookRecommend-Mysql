@@ -9,7 +9,7 @@ Book=Book[['ISBN', 'Book-Title']]
 Book['index']=Book.index
 
 Rating = pd.read_csv('data/BX-Book-Ratings.csv', sep=None, error_bad_lines=False)
-Rating=Rating[:5000]
+Rating=Rating[:10000]
 
 i=0
 for x in set(Rating['User-ID']):
@@ -86,7 +86,7 @@ saver = tf.train.Saver()
 sess = tf.Session()
 sess.run(init)
 
-for i in range(5000):
+for i in range(60000):
     print('Epoch {0}'.format(i))
     _, book_summary = sess.run([train, summaryMerged])
     # 把训练的结果summaryMerged存在里
