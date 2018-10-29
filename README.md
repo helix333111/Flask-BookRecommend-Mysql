@@ -35,8 +35,8 @@
 *  Rating=Rating[:5000]    
 设置了一个切片区间，默认使用5000，你可以按你的配置修改这个参数。
 
-## `作者选择 Rating[:10000] Epoch 60000 Loss函数 `
-<img src="./image/img7.jpg" width="350" height="250"><br>
+## `作者选择 Rating[:10000] Epoch 60000 Loss函数曲线 `
+<img src="./image/img7.png" width="350" height="250"><br>
 
 ## V1.0.0.3 更新
 
