@@ -139,7 +139,7 @@ def run(i):
     res = res.append(DF)
     
 
-path = './BX-Book-Ratings.csv'
+path = './data/BX-Book-Ratings.csv'
 Data = pd.read_csv(path, sep=None, error_bad_lines=False)
 Data.columns = ['UserID','BookID','Rating']
 res = pd.DataFrame(columns=['UserID','BookID','score'])
@@ -156,5 +156,5 @@ for x in range(len(users)):
     print(x)
     run(x)
     print(res)
-res.to_csv('booktuijian.csv',index=False)
+res.to_csv('./data/booktuijian.csv',index=False)
 
