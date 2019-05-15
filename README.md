@@ -38,6 +38,10 @@
 ## `作者选择 Rating[:10000] Epoch 60000 Loss函数曲线 `
 <img src="./image/img7.png" width="350" height="250"><br>
 
+## V1.0.0.4 更新
+*  项目整体重构
+*  后端代码优化
+*  前端页面全换
 ## V1.0.0.3 更新
 
 *  介于很多同学需要数据，和对项目部署困难，现在将项目结构整体优化了。更容易部署了，随下随用
@@ -77,32 +81,30 @@
 ## 项目源码介绍
 
 图书推荐系统
-
->      data               >这个文件夹中存放数据集，数据集比较杂乱。   
->>       BX-Books.csv        >关于27万条的书籍的信息，涉及书籍编号，书籍名，书籍作者....
->>       BX-Users.csv        >关于27万条的用户信息，涉及用户ID，用户区县，用户省份，用户年龄。
->>       BX-Book-Ratings.csv >近115万条的用户评分信息，涉及到用户ID，书籍ID，打分rating    
->>       booktuijian.csv     >这个将会由算法计算产生推荐结果。
->     result              >存放tensorflow计算图
->     model               >存放tensorflow的模型，可以提供给后台做推荐交互
->     BookWebAPI.py       >启动这个文件开启服务器。启动方式：在更目录下进入cmd输入    python BookWebAPI.py  
->     CSVToMysql.py       >读取data文件夹里面的书籍存储到数据库中。
->     CF.py               >协同过滤1：CF 算法
->     CF4TensorFlow.py    >使用tensorflow实现的协同过滤CF算法
->     其他文件夹           >提供给前端页面和前端页面的依赖
-
+```
+----Flask-BookRecommend-Mysql\
+    |----data                         >这个文件夹中存放数据集，数据集比较杂乱。
+    |----image\                       
+    |----图书推荐系统\                  >web端 
+    |    |----logger.py               >日志记录
+    |    |----config.yml              >配置参数
+    |    |----logs                    >日志
+    |    |----app.py                  >web入口
+    |    |----utils.py                >辅助模块
+    |----CF_use_python.py            >协同过滤：CF 算法
+    |----CF_use_tensorflow.py        >使用tensorflow实现的协同过滤CF算法
+    |----read_data_save_to_mysql.py  >读取data文件夹里面的书籍存储到数据库中
+    |----README.md
+```
 
 ## 项目启动方式：
 
 数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
+
 * 将下好的数据集放到data文件夹下
-* 运行CSVToMysql.py文件 将数据导入到mysql中。
-* 进入BookwebAPI 运行即可。  
-
-
-如果需要测试推荐功能，需要计算推荐表 也就是生成booktuijian.csv文件，并将其导入mysql数据库中
-`计算方式`：
-*  将BX-Book-Rating.csv文件放入CF文件夹下，运行CF.py文件,将生成的book推荐表放入data文件夹下，执行CSVToMysql.py，导入推荐表的部分。
+* 运行read_data_save_to_mysql.py文件 将数据导入到mysql中。
+* 进入图书推荐系统,运行app.py
+* 在浏览器上访问 127.0.0.1:8080   
 *  使用UserID和Location作为账号密码登录网站。
 
 example：
