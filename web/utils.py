@@ -29,6 +29,7 @@ class mysql:
         :return:    sql结果
         """
         c = self.connection.cursor(cursor=pymysql.cursors.DictCursor)
+        self.connection.ping(reconnect=True)
         c.execute(sql)
         return c.fetchone()
 
@@ -39,6 +40,7 @@ class mysql:
         :return:    sql结果
         """
         c = self.connection.cursor(cursor=pymysql.cursors.DictCursor)
+        self.connection.ping(reconnect=True)
         c.execute(sql)
         return c.fetchall()
 
@@ -48,6 +50,7 @@ class mysql:
         :param sql: sql语句
         """
         c = self.connection.cursor(cursor=pymysql.cursors.DictCursor)
+        self.connection.ping(reconnect=True)
         c.execute(sql)
         self.connection.commit()
 
@@ -55,6 +58,7 @@ class mysql:
         """
         回滚
         """
+        self.connection.ping(reconnect=True)
         self.connection.rollback()
 
 

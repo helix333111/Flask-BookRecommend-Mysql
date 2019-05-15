@@ -51,17 +51,29 @@ def recommend():
     # 推荐书籍
     recommend_books = []
     if login:
-        sql = """select a.BookTitle,
-                        a.BookAuthor,
-                        a.BookID,
-                        a.ImageM
-                    from (SELECT * from Books ) a  
-                  LEFT  JOIN Booktuijian as b on a.BookID = b.BookID where b.UserID = '{}'
-                    """.format(session['userid'])
+        sql = """select e.BookTitle,
+                       e.BookAuthor,
+                       e.BookID,
+                       e.ImageM
+                       from Books e
+                inner join (select  c.BookID,
+                                    sum(c.Rating) as score  
+                            from (select UserID,BookID,Rating from Bookrating where Rating != 0
+                                limit {0}) c 
+                            inner join (select UserID 
+                                        from (select UserID,BookID from Bookrating where Rating != 0
+                                        limit {0}) a 
+                                        inner join (select BookID from Booktuijian where UserID='{1}') b
+                                        on a.BookID=b.BookID ) d
+                            on c.UserID=d.UserID
+                            group by c.BookID 
+                            order by score desc 
+                            limit 10) f
+                on e.BookID = f.BookID""".format(config['limit'],session['userid'])
         try:
             recommend_books = mysql.fetchall_db(sql)
             recommend_books = [[v for k, v in row.items()] for row in recommend_books]
-            logger.info("recommend books: {}".format(recommend_books))
+            
         except Exception as e:
             error = True
             logger.exception("select recommend books error: {}".format(e))

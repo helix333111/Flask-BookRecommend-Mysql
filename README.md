@@ -2,9 +2,11 @@
 # 智能图书推荐系统                          
 ------------------------------------------------------------------------------------------------
 
-互联网访问地址[http://198.56.183.11:8080](http://198.56.183.11:8080) 
+~~互联网访问地址[http://198.56.183.11:8080](http://198.56.183.11:8080)~~
 
-数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
+~~数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/)~~
+
+将数据上传到了项目目录，不用去外部下载数据集了
 
 #### `主页`
 <img src="./image/img1.jpg" width="750" height="350">
@@ -71,7 +73,7 @@
     pip install flask
     pip install pymysql
 ```
- 
+
 
 ## 联系作者：QQ：470581985
 
