@@ -6,20 +6,19 @@
 
 数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
 
-## `主页`
-<img src="./image/img1.jpg" width="350" height="250"><br>
-## `搜索功能`
-<img src="./image/img2.jpg" width="350" height="250"><br>
-## `登录`
-<img src="./image/img3.jpg" width="350" height="250"><br>
-## `推荐`
-<img src="./image/img4.jpg" width="350" height="250"><br>
-## `推荐数据书单`
-<img src="./image/img5.jpg" width="350" height="250"><br>
-## `历史评分书单`
-<img src="./image/img6.jpg" width="350" height="250"><br>
+#### `主页`
+<img src="./image/img1.jpg" width="750" height="350">
+#### `搜索功能`
+<img src="./image/img2.jpg" width="750" height="350">
+#### `登录`
+<img src="./image/img3.jpg" width="750" height="350">
+####  `推荐`
+<img src="./image/img4.jpg" width="750" height="350">
+#### `推荐数据书单`
+<img src="./image/img5.jpg" width="750" height="350">
+#### `历史评分书单`
+<img src="./image/img6.jpg" width="750" height="350">
 
-## V1.0.0.4 更新
 
 *  对图书数据使用tensorflow和GPU加速实现了初版的协同过滤算法
 （为了tensorflow的tensor运算，所以会创建比较大的矩阵，会初始化2个约27W乘10W的矩阵）
@@ -34,18 +33,20 @@
 *  Rating=Rating[:5000]    
 设置了一个切片区间，默认使用5000，你可以按你的配置修改这个参数。
 
-## `作者选择 Rating[:10000] Epoch 60000 Loss函数曲线 `
+作者选择 Rating[:10000] Epoch 60000 Loss函数曲线 
 <img src="./image/img7.png" width="350" height="250"><br>
 
-## V1.0.0.4 更新
+### V4 更新
+
 *  项目整体重构
 *  后端代码优化
 *  前端页面全换
-## V1.0.0.3 更新
+
+### V3 更新
 
 *  介于很多同学需要数据，和对项目部署困难，现在将项目结构整体优化了。更容易部署了，随下随用
 
-## V1.0.0.2 更新
+### V2 更新
 
 *  优化了搜索框的样式
 *  优化了整体配色
@@ -53,7 +54,7 @@
 *  新增了一个书籍详情页面（基于书本的推荐可以在里面做）
 *  丰富了搜索内容 
 
-## V1.0.0.1 更新
+### V1 更新
 
 *  增加了一个搜索引擎功能，可以输入书名做对应的查询，此功能还有待完善
 *  增加了对推荐书籍的评分功能。
@@ -62,15 +63,14 @@
 
 ## 所需运行环境
 
-    使用python3.6作为编程语言。使用mysql作为数据库存储.
-    需要安装pandas,flask，pymysql.
-    安装方式:
-    cmd下
+* 使用python3.6作为编程语言。使用mysql作为数据库存储.
+* 需要安装pandas,flask，pymysql.
+*　安装方式:
+```
     pip install pandas
     pip install flask
     pip install pymysql
-    pip install tensorflow-gpu==1.9.0
-
+```
  
 
 ## 联系作者：QQ：470581985
@@ -99,13 +99,14 @@
 
 ## 项目启动方式：
 
-数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
-
+* 下载数据集 数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/) 
 * 将下好的数据集放到data文件夹下
 * 运行read_data_save_to_mysql.py文件 将数据导入到mysql中。
-* 进入图书推荐系统,运行app.py
+* 进入web文件夹,运行app.py
 * 在浏览器上访问 127.0.0.1:8080   
 *  使用UserID和Location作为账号密码登录网站。
+
+* 注意mysql的链接参数.默认是root,密码123456
 
 example：
 * `UserID`：39027
