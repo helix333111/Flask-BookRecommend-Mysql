@@ -42,6 +42,21 @@ class mysql:
         c.execute(sql)
         return c.fetchall()
 
+    def add(self, sql):
+        """
+        数据添加
+        :param sql: sql语句
+        """
+        c = self.connection.cursor(cursor=pymysql.cursors.DictCursor)
+        c.execute(sql)
+        self.connection.commit()
+
+    def rollback(self):
+        """
+        回滚
+        """
+        self.connection.rollback()
+
 
 class InvalidConfigError(ValueError):
     """如果遇到无效的配置.就会引发此异常
@@ -119,4 +134,3 @@ def load_config(filename=DEFAULT_CONFIG_LOCATION, **kwargs):
         return file_config
     else:
         return kwargs
-

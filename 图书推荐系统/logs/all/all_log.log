@@ -1,1 +1,50 @@
-2019-05-15 09:40:47,777 - INFO - app:is_valid - lineno:94 - username:265254,password:salvisa, kentucky, usa: has login success
+2019-05-15 10:38:38,381 - INFO - app:is_valid - lineno:132 - username:265254,password:salvisa, kentucky, usa: has login success
+2019-05-15 10:38:46,562 - INFO - app:is_valid - lineno:135 - username:adam,password:470581985: has login filed
+2019-05-15 10:39:33,994 - INFO - app:register - lineno:109 - username:test,password:test,age:21 register success
+2019-05-15 10:39:40,922 - INFO - app:is_valid - lineno:132 - username:test,password:test: has login success
+2019-05-15 10:39:43,782 - ERROR - app:recommend - lineno:66 - select recommend books error: (1054, "Unknown column 'test' in 'where clause'")
+Traceback (most recent call last):
+  File "/home/adam/桌面/server/Flask-BookRecommend-Mysql/图书推荐系统/app.py", line 63, in recommend
+    recommend_books = mysql.fetchall_db(sql)
+  File "/home/adam/桌面/server/Flask-BookRecommend-Mysql/图书推荐系统/utils.py", line 42, in fetchall_db
+    c.execute(sql)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/cursors.py", line 328, in _query
+    conn.query(q)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 732, in _read_query_result
+    result.read()
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'test' in 'where clause'")
+2019-05-15 10:43:43,817 - ERROR - app:recommend - lineno:67 - select recommend books error: (1054, "Unknown column 'test' in 'where clause'")
+Traceback (most recent call last):
+  File "/home/adam/桌面/server/Flask-BookRecommend-Mysql/图书推荐系统/app.py", line 63, in recommend
+    recommend_books = mysql.fetchall_db(sql)
+  File "/home/adam/桌面/server/Flask-BookRecommend-Mysql/图书推荐系统/utils.py", line 42, in fetchall_db
+    c.execute(sql)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/cursors.py", line 328, in _query
+    conn.query(q)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 732, in _read_query_result
+    result.read()
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/adam/anaconda3/envs/robot/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1054, "Unknown column 'test' in 'where clause'")
