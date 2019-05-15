@@ -91,10 +91,10 @@
             <p><a href="/loginForm" class="btn btn-primary btn-block" role="button" >查询结果为空</a></p>    
         {% else %}
         {% for book in books %}
-        <div class="col-sm-4 col-md-3">
+        <div class="col-xs-7">
             <div class="thumbnail" >
                 <a href="/bookinfo?bookid={{book[2]}}">
-                    <img style="width: 100%; height: 200px; display: block;" alt="100%x200" src="{{book[3]}}" >
+                    <img style="width: 60%; height: 400px; display: block;" alt="100%x200" src="{{book[3]}}" >
                 </a>
                 <div class="caption center">
                     <p >{{book[0]}}</p>

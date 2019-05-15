@@ -51,17 +51,17 @@ def recommend():
     # 推荐书籍
     recommend_books = []
     if login:
-
         sql = """select a.BookTitle,
                         a.BookAuthor,
                         a.BookID,
                         a.ImageM
                     from (SELECT * from Books ) a  
-                  LEFT  JOIN Booktuijian as b on a.BookID = b.BookID where b.UserID = {}
+                  LEFT  JOIN Booktuijian as b on a.BookID = b.BookID where b.UserID = '{}'
                     """.format(session['userid'])
         try:
             recommend_books = mysql.fetchall_db(sql)
             recommend_books = [[v for k, v in row.items()] for row in recommend_books]
+            logger.info("recommend books: {}".format(recommend_books))
         except Exception as e:
             error = True
             logger.exception("select recommend books error: {}".format(e))
@@ -107,7 +107,7 @@ def register():
 
             try:
                 sql = "insert into User (UserID,Location,Age) values ('{}','{}','{}')".format(username, password, age)
-                mysql.add(sql)
+                mysql.exe(sql)
                 logger.info("username:{},password:{},age:{} register success".format(username, password, age))
             except Exception as e:
                 mysql.rollback()
@@ -180,6 +180,24 @@ def order():
 
     return render_template("Order.html")
 
+def update_recommend_book(UserID,BookID):
+    """
+    更新推荐数据
+    """
+
+    sql = '''SELECT score FROM Booktuijian WHERE UserID="{0}" and BookID="{1}"'''.format(UserID,BookID)
+    score = mysql.fetchone_db(sql)
+    if score:
+        score = score['score']
+        score += 1
+        sql =  '''UPDATE Booktuijian SET score='{2}' WHERE UserID="{0}" and BookID="{1}"  '''.format(UserID,BookID,int(score))
+        logger.info("update_recommend_book, sql:{}".format(sql))
+        mysql.exe(sql)
+    else:
+        score = 1
+        sql= ''' insert into Booktuijian (UserID,BookID,score) values ('{0}','{1}','{2}') '''.format(UserID,BookID,int(score))
+        logger.info("update_recommend_book, sql:{}".format(sql))
+        mysql.exe(sql)
 
 @app.route("/bookinfo", methods=['POST', 'GET'])
 def bookinfo():
@@ -187,7 +205,11 @@ def bookinfo():
     书籍详情
     :return: BookInfo.html
     """
-    book_info = []
+    # 获取用户IP
+    if 'userid' not in session:
+        userid = request.remote_addr
+    else:
+        userid = session['userid']
     try:
         if request.method == 'GET':
             ID = request.args.get('bookid')
@@ -195,9 +217,10 @@ def bookinfo():
                             BookID,
                             PubilcationYear,
                             BookAuthor,
-                            ImageM from Books where BookID={} """.format(ID)
+                            ImageM from Books where BookID="{}" """.format(ID)
             book_info = mysql.fetchall_db(sql)
             book_info = [v for k, v in book_info[0].items()]
+            update_recommend_book(userid,ID)
     except Exception as e:
         logger.exception("select book info error: {}".format(e))
     return render_template('BookInfo.html', book_info=book_info)
@@ -232,6 +255,10 @@ def search():
     except Exception as e:
         logger.exception("select search books error: {}".format(e))
     return render_template("Search.html", key=keyword, books=search_books)
+
+
+
+
 
 
 if __name__ == '__main__':

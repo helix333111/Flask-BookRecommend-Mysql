@@ -42,7 +42,7 @@ class mysql:
         c.execute(sql)
         return c.fetchall()
 
-    def add(self, sql):
+    def exe(self, sql):
         """
         数据添加
         :param sql: sql语句
