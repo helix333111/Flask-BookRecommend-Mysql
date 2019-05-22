@@ -51,7 +51,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">首页</a></li>
-                <li><a href="/order">我的书单</a></li>
+                <li><a href="/historical">历史评分</a></li>
                 <li><a href="/user">个人中心</a></li>
             </ul>
             {% if not login %}
@@ -59,14 +59,14 @@
                     <li><a href="/loginForm">登录</a></li>
                     <li><a href="/registerationForm">注册</a></li>
                     <li>
-                        <a href="Cart.html"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
                 </ul>
             {% else %}
                 <ul class="nav navbar-nav navbar-right hidden-sm">
                     <li><a>{{ useid }}</a></li>
                     <li><a href="/logout">注销</a></li>
                     <li>
-                        <a href="Cart.html"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
                 </ul>
             {% endif %}
         </div><!--/.nav-collapse -->
@@ -92,14 +92,15 @@
 
     <ul class="nav nav-tabs" id="myTabs">
         <li><a href='/'>热门书籍</a></li>
+        <li><a href='/guess'>猜你喜欢</a></li>
         <li><a href='/recommend'>推荐书籍</a></li>
     </ul>
     <div class="row">
         {% if not books %}
-            {% if error %}
-            <p><a href="/loginForm" class="btn btn-primary btn-block" role="button">无推荐数据</a></p>
+            {% if login %}
+                <p><a href="/loginForm" class="btn btn-primary btn-block" role="button">无推荐数据</a></p>
             {% else %}
-            <p><a href="/loginForm" class="btn btn-primary btn-block" role="button">请登录后查看</a></p>
+                <p><a href="/loginForm" class="btn btn-primary btn-block" role="button">请登录后查看</a></p>
             {% endif %}
         {% else %}
             {% for book in books %}
@@ -110,7 +111,11 @@
                         </a>
                         <div class="caption center">
                             <p>{{ book[0] }}</p>
+                            {% if name=="recommend" %}
+                            <p><span>推荐分:</span><span>{{ book[4] }}</span></p>
+                            {% else %}
                             <p><span>作者:</span><span>{{ book[1] }}</span></p>
+                            {% endif %}
                             <p><a href="/bookinfo?bookid={{ book[2] }}" bookid="{{ book[2] }}"
                                   class="btn btn-primary btn-block" role="button">查看详情</a></p>
                         </div>

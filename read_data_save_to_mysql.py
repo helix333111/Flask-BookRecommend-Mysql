@@ -92,12 +92,14 @@ connection = pymysql.connect(user="root",
 cur = connection.cursor()
 cur.execute('DROP DATABASE if exists Book')
 cur.execute('CREATE DATABASE if not exists Book')
+# 创建购物车表
+createCartSql = '''CREATE TABLE Cart         
+               (UserID                 VARCHAR(100)   ,
+                BookID                VARCHAR(100) );'''
+cur.execute(createCartSql)
 connection.commit()
 cur.close()
 connection.close()
-
-
-
 
 
 BookInfoInsert = BookSqlTools()

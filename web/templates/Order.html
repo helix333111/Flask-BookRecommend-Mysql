@@ -1,8 +1,7 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-
     <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
     <script src="static/Flat-UI/dist/js/vendor/jquery.min.js"></script>
@@ -13,6 +12,13 @@
         .row{
             margin-left: 20px;
             margin-right: 20px;;
+        }
+        p {
+            white-space: nowrap;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .line-center{
             line-height:50px;
@@ -29,19 +35,50 @@
 
             cursor: pointer;
         }
+        .black_overlay{ 
+            display: none; 
+            position: absolute; 
+            top: 0%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            background-color: black; 
+            z-index:1001; 
+            -moz-opacity: 0.8; 
+            opacity:.80; 
+            filter: alpha(opacity=88); 
+        } 
+        .white_content { 
+            display: none; 
+            position: absolute; 
+            top: 25%; 
+            left: 40%; 
+            width: 20%; 
+            height: 45%; 
+            padding: 20px;  
+            background: url("../static/img/zs.jpg") no-repeat;
+            background-color: white; 
+            z-index:1002; 
+            overflow: auto; 
+        } 
     </style>
     <script>
-        function myClick(n){
-           location.href = "/bookinfo";
+        $(function () {
+            $('#myTabs a').click(function (e) {
+                $(this).tab('show')
+            });
+        })
+        function myClick(bookid){
+           location.href = "/bookinfo?bookid="+bookid.toString();
         }
         function btnClick(){
             alert("btn");
             return false;
         }
         $(function(){
-
         })
     </script>
+
 </head>
 <body>
 <!-- Static navbar -->
@@ -56,23 +93,23 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">首页</a></li>
-                <li><a href="/order">我的书单</a></li>
+                <li><a href="/historical">历史评分</a></li>
                 <li><a href="/user">个人中心</a></li>
             </ul>
             {% if not login %}
-            <ul class="nav navbar-nav navbar-right hidden-sm">
-                <li><a href="/loginForm">登录</a></li>
-                <li><a href="/registerationForm">注册</a></li>
-                <li>
-                    <a href="Cart.html"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
-            </ul>
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a href="/loginForm">登录</a></li>
+                    <li><a href="/registerationForm">注册</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
             {% else %}
-            <ul class="nav navbar-nav navbar-right hidden-sm">
-                <li><a >{{useid}}</a></li>
-                <li><a href="/logout">注销</a></li>
-                <li>
-                    <a href="Cart.html"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
-            </ul>
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a>{{ useid }}</a></li>
+                    <li><a href="/logout">注销</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
             {% endif %}
         </div><!--/.nav-collapse -->
     </div>
@@ -81,64 +118,43 @@
 <div class="container">
     <div class="row thumbnail center">
         <div class="col-sm-12">
-            <h1 class="text-center" style="margin-bottom: 30px">我的书单</h1>
+            <h1 class="text-center" style="margin-bottom: 30px">购物车</h1>
         </div>
         <div class="col-sm-12 thumbnail">
             <div class="col-sm-3 line-center">订单编号</div>
-            <div class="col-sm-2 line-center">订单状态</div>
-            <div class="col-sm-2 line-center">商品数量 </div>
+            <div class="col-sm-2 line-center">书籍名称</div>
+            <div class="col-sm-2 line-center">作者 </div>
             <div class="col-sm-2 line-center">订单总价</div>
             <div class="col-sm-3 line-center">操作</div>
         </div>
-        <div class="list-group">
-            <div class="col-sm-12  list-group-item" >
-                <div class="col-sm-3 line-center" onclick="myClick(1)">ahiudsfhjk-23423-23asd-12</div>
-                <div class="col-sm-2 line-center">未付款</div>
-                <div class="col-sm-2 line-center">12 </div>
-                <div class="col-sm-2 line-center">1231.00元</div>
-                <div class="col-sm-3 line-center">
-                    <button class="btn btn-danger">删除订单</button>
-                    <button class="btn btn-success">提交订单</button>
 
+    <div class="list-group">
+            {% for book in books %}
+            <div class="col-sm-12  list-group-item" onclick="myClick('{{book[0]}}')">
+                <div class="col-sm-3 line-center" >{{book[0]}}</div>
+                <div class="col-sm-2 line-center"><p>{{book[1]}}</p></div>
+                <div class="col-sm-2 line-center"><p>{{book[2]}}</p></div>
+                <div class="col-sm-2 line-center">{{book[3]}}</div>
+                <div class="col-sm-3 line-center">
+                <a href="/delete?bookid={{book[0]}}" bookid="{{ book[0] }}"><button class="btn btn-danger">删除订单</button></a>
                 </div>
             </div>
-            <div class="col-sm-12  list-group-item" >
-                <div class="col-sm-3 line-center" onclick="myClick(2)">ahiudsfhjk-23423-23asd-12</div>
-                <div class="col-sm-2 line-center">未付款</div>
-                <div class="col-sm-2 line-center">12 </div>
-                <div class="col-sm-2 line-center">1231.00元</div>
-                <div class="col-sm-3 line-center">
-                    <button class="btn btn-danger">删除订单</button>
-                    <button class="btn btn-success">提交订单</button>
-
-                </div>
-            </div>
-            <div class="col-sm-12  list-group-item" >
-                <div class="col-sm-3 line-center" onclick="myClick(3)">ahiudsfhjk-23423-23asd-12</div>
-                <div class="col-sm-2 line-center">未付款</div>
-                <div class="col-sm-2 line-center">12 </div>
-                <div class="col-sm-2 line-center">1231.00元</div>
-                <div class="col-sm-3 line-center">
-                    <button class="btn btn-danger">删除订单</button>
-                    <button class="btn btn-success">提交订单</button>
-
-                </div>
-            </div>
-            <div class="col-sm-12  list-group-item" >
-                <div class="col-sm-3 line-center" onclick="myClick(4)">ahiudsfhjk-23423-23asd-12</div>
-                <div class="col-sm-2 line-center">未付款</div>
-                <div class="col-sm-2 line-center">12 </div>
-                <div class="col-sm-2 line-center">1231.00元</div>
-                <div class="col-sm-3 line-center">
-                    <button class="btn btn-danger">删除订单</button>
-                    <button class="btn btn-success">提交订单</button>
-                </div>
-            </div>
-
+            {% endfor %}
     </div>
 </div>
-
-
+<div class="col-sm-12 ">
+    <div class="col-sm-3 line-center"></div>
+    <div class="col-sm-3 line-center"></div>
+    <div class="col-sm-3 line-center"></div>
+    <div class="col-sm-3 line-center">
+    <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
+    <button class="btn btn-success">下单</button>
+    </a></div>
+</div>
+<div id="light" class="white_content" >
+    <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">关闭</a>
+</div> 
+<div id="fade" class="black_overlay"></div> 
 
 </body>
 </html>

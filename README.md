@@ -10,14 +10,19 @@
 
 #### `主页`
 <img src="./image/img1.jpg" width="750" height="350">
+
 #### `搜索功能`
 <img src="./image/img2.jpg" width="750" height="350">
+
 #### `登录`
 <img src="./image/img3.jpg" width="750" height="350">
+
 ####  `推荐`
 <img src="./image/img4.jpg" width="750" height="350">
+
 #### `推荐数据书单`
 <img src="./image/img5.jpg" width="750" height="350">
+
 #### `历史评分书单`
 <img src="./image/img6.jpg" width="750" height="350">
 
@@ -36,7 +41,20 @@
 设置了一个切片区间，默认使用5000，你可以按你的配置修改这个参数。
 
 作者选择 Rating[:10000] Epoch 60000 Loss函数曲线 
+
 <img src="./image/img7.png" width="350" height="250"><br>
+
+### 功能清单
+
+```
+注册，登录，检索查询，评分，实时推荐，离线推荐，购物车，书单，删除购物车，删除书单。
+管理员权限： 删除用户，添加书籍，删除书籍。
+```
+
+### V5 更新
+
+*  系统整体功能全面完善,后台管理系统上线
+*  前端增加实时推荐模块-猜你喜欢.协同过滤计算结果在-推荐书籍内
 
 ### V4 更新
 
@@ -75,10 +93,8 @@
 ```
 
 
-## 联系作者：QQ：470581985
-
-百度网盘完整源码，带数据和推荐:
-链接：[https://pan.baidu.com/s/1bh8TMHqiwFmRCls4WD1A6A](https://pan.baidu.com/s/1bh8TMHqiwFmRCls4WD1A6A) 提取码：uham
+## 联系作者：
+QQ：470581985
 
 ## 项目源码介绍
 
