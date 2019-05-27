@@ -290,7 +290,11 @@ def user():
     个人信息
     :return: UserInfo.html
     """
-    login, userid = True, session['userid']
+    login, userid = False, None
+    if 'userid' not in session:
+        return redirect(url_for('loginForm'))
+    else:
+        login, userid = True, session['userid']
     userinfo = []
     try:
         sql = "select UserID,Location,Age from User where UserID='{}'".format(userid)

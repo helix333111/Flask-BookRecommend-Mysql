@@ -9,39 +9,49 @@
 将数据上传到了项目目录，不用去外部下载数据集了
 
 #### `主页`
-<img src="./image/img1.jpg" width="750" height="350">
+<img src="./image/index.jpg" width="750" height="350">
 
 #### `搜索功能`
-<img src="./image/img2.jpg" width="750" height="350">
+<img src="./image/search.jpg" width="750" height="350">
 
 #### `登录`
-<img src="./image/img3.jpg" width="750" height="350">
+<img src="./image/login.jpg" width="750" height="350">
 
-####  `推荐`
-<img src="./image/img4.jpg" width="750" height="350">
-
-#### `推荐数据书单`
-<img src="./image/img5.jpg" width="750" height="350">
+#### `注册`
+<img src="./image/register.jpg" width="750" height="350">
 
 #### `历史评分书单`
-<img src="./image/img6.jpg" width="750" height="350">
+<img src="./image/historical.jpg" width="750" height="350">
+
+#### `书单`
+<img src="./image/userinfo.jpg" width="750" height="350">
+
+#### `购物车`
+<img src="./image/cart.jpg" width="750" height="350">
+
+#### `管理员 用户删除`
+<img src="./image/admin01.jpg" width="750" height="350">
+
+#### `管理员 书籍添加删除`
+<img src="./image/admin02.jpg" width="750" height="350">
 
 
 *  对图书数据使用tensorflow和GPU加速实现了初版的协同过滤算法
 （为了tensorflow的tensor运算，所以会创建比较大的矩阵，会初始化2个约27W乘10W的矩阵）
 作者训练环境配置：
-        
-        环境：ubuntu 
-        内存：64G
-        显卡：TaiTanXP * 4  （4*12G）
-
+```       
+环境：ubuntu 
+内存：64G
+显卡：TaiTanXP * 4  （4*12G）
+```
 速度有比较大的提升。一天内可以训练完成。但是内存占用极高。接近42G内存。
 所以在git上面CF4TensorFlow.py这个文件中第12行：    
-*  Rating=Rating[:5000]    
+```
+Rating=Rating[:5000]   
+``` 
 设置了一个切片区间，默认使用5000，你可以按你的配置修改这个参数。
-
-作者选择 Rating[:10000] Epoch 60000 Loss函数曲线 
-
+作者选择 Epoch 60000 Loss函数曲线 
+<br>
 <img src="./image/img7.png" width="350" height="250"><br>
 
 ### 功能清单
