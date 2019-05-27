@@ -135,9 +135,9 @@ QQ：470581985
 * 注意mysql的链接参数.默认是root,密码123456
 
 Example：
-* `UserID`：
+* `UserID/账号`：
     - 39027
-* `UserName`：
+* `UserName/密码`：
     - tempe, arizona, usa
 
 ## 项目思路：
