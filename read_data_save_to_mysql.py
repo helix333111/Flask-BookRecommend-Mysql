@@ -4,16 +4,8 @@ Created on Sun Jul 15 00:01:50 2018
 
 @author: Administrator
 """
-
-from flask import Flask, render_template, request 
-from flask import jsonify
 import pandas as pd
 import pymysql
-import pandas as pd
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = "dfdfdffdad"
-
 
 class BookSqlTools:
     #链接MYSQL数据库
@@ -23,7 +15,7 @@ class BookSqlTools:
         try:
             connection = pymysql.connect(user="root",
                                          password="123456",
-                                         port=3306,
+                                         port=3300,
                                          host="127.0.0.1",   #本地数据库  等同于localhost
                                          db="Book",
                                          charset="utf8")
@@ -52,7 +44,7 @@ class BookSqlTools:
         try:
             connection = pymysql.connect(user="root",
                                          password="123456",
-                                         port=3306,
+                                         port=3300,
                                          host="127.0.0.1",   #本地数据库  等同于localhost
                                          db="Book",
                                          charset="utf8")
@@ -84,18 +76,29 @@ class BookSqlTools:
 
 
 connection = pymysql.connect(user="root",
-                                         password="123456",
-                                         port=3306,
-                                         host="127.0.0.1",   
-                                         charset="utf8")
+                         password="123456",
+                         port=3300,
+                         host="127.0.0.1",   
+                         charset="utf8")
 
 cur = connection.cursor()
 cur.execute('DROP DATABASE if exists Book')
 cur.execute('CREATE DATABASE if not exists Book')
+connection.commit()
+cur.close()
 # 创建购物车表
+
+connection = pymysql.connect(user="root",
+                         password="123456",
+                         port=3300,
+			 db="Book",
+                         host="127.0.0.1",   
+                         charset="utf8")
+
+cur = connection.cursor()
 createCartSql = '''CREATE TABLE Cart         
                (UserID                 VARCHAR(100)   ,
-                BookID                VARCHAR(100) );'''
+                BookID                VARCHAR(100) )'''
 cur.execute(createCartSql)
 connection.commit()
 cur.close()
