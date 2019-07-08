@@ -46,7 +46,7 @@
 所以在git上面CF4TensorFlow.py这个文件中第12行：    
 ```
 Rating=Rating[:5000]   
-``` 
+```
 设置了一个切片区间，默认使用5000，你可以按你的配置修改这个参数。
 作者选择 Epoch 60000 Loss函数曲线 
 <br>
@@ -124,6 +124,10 @@ QQ：470581985
 ```
 
 ## 项目启动方式：
+
+数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/]
+
+* 将下载好的数据放入data文件夹下
 
 * 运行read_data_save_to_mysql.py文件 将数据导入到mysql中。
 * 进入web文件夹,运行app.py
